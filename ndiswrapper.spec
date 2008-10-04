@@ -11,7 +11,7 @@ BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Provides:	%{name}-kmod-common = %{version}
 Requires:	%{name}-kmod >= %{version}
 
-ExcludeArch: ppc
+ExcludeArch:    ppc ppc64
 
 %description
 The ndiswrapper project makes it possible to use WLAN-Hardware 
