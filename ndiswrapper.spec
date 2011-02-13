@@ -1,7 +1,7 @@
 Summary:	Ndiswrapper wraps around Windows WLAN drivers within Linux
 Name: 		ndiswrapper
-Version: 	1.54
-Release: 	2%{?dist}
+Version: 	1.56
+Release: 	1%{?dist}
 License: 	GPLv2
 Group: 		System Environment/Kernel
 URL:		http://ndiswrapper.sourceforge.net
@@ -54,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Feb 13 2011 Nicolas Chauvet <kwizart@gmail.com> - 1.56-1
+- Update to 1.56
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 1.54-2
 - rebuild for new F11 features
 
