@@ -1,19 +1,19 @@
-#global _rc rc1
+#global pre rc1
 
 Summary:	Ndiswrapper wraps around Windows WLAN drivers within Linux
 Name: 		ndiswrapper
-Version: 	1.57
-Release: 	1%{?dist}
+Version: 	1.58
+Release: 	1%{?pre}%{?dist}
 License: 	GPLv2
 Group: 		System Environment/Kernel
 URL:		http://ndiswrapper.sourceforge.net
-Source0: 	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?_rc}.tar.gz
+Source0: 	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?pre}.tar.gz
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Provides:	%{name}-kmod-common = %{version}
 Requires:	%{name}-kmod >= %{version}
 
-ExcludeArch:    ppc ppc64
+ExclusiveArch:  %{ix86} x86_64
 
 %description
 The ndiswrapper project makes it possible to use WLAN-Hardware 
@@ -28,7 +28,7 @@ http:/ndiswrapper.sourceforge.net
 
 
 %prep
-%setup -q -n %{name}-%{version}%{?_rc}
+%setup -q -n %{name}-%{version}%{?pre}
 
 
 %build
@@ -56,6 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 21 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.58-1
+- Update to 1.58
+
 * Wed Jan 11 2012 Nicolas Chauvet <kwizart@gmail.com> - 1.57-1
 - Update to 1.57
 
