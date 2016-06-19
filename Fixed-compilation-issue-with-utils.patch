@@ -1,0 +1,47 @@
+From 1a9cc0063e7c1842d565037f6b358823ea7bb1c0 Mon Sep 17 00:00:00 2001
+From: pgiri <pgiri@yahoo.com>
+Date: Sat, 14 May 2016 10:22:25 -0400
+Subject: [PATCH] Fixed compilation issue with 'utils'.
+
+loadndisdriver uses 'loader.h' which has KERNEL_VERSION macro that
+is not defined for user space. To fix this, moved the block that
+loads vmalloc.h when compiling with > 4.0 kernels in to
+ntoskernel.h (that is used only in 'driver').
+---
+ ndiswrapper/driver/loader.h     | 4 ----
+ ndiswrapper/driver/ntoskernel.h | 4 ++++
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/ndiswrapper/driver/loader.h b/ndiswrapper/driver/loader.h
+index 1ea5e0c..7c3b3b0 100644
+--- a/ndiswrapper/driver/loader.h
++++ b/ndiswrapper/driver/loader.h
+@@ -16,10 +16,6 @@
+ #ifndef _LOADER_H_
+ #define _LOADER_H_
+ 
+-#if LINUX_VERSION_CODE > KERNEL_VERSION(4,0,0)
+-#include <linux/vmalloc.h>
+-#endif
+-
+ #include "ndiswrapper.h"
+ 
+ #ifndef __KERNEL__
+diff --git a/ndiswrapper/driver/ntoskernel.h b/ndiswrapper/driver/ntoskernel.h
+index 7713a78..79503f0 100644
+--- a/ndiswrapper/driver/ntoskernel.h
++++ b/ndiswrapper/driver/ntoskernel.h
+@@ -47,6 +47,10 @@
+ #include <linux/kthread.h>
+ #include <linux/workqueue.h>
+ 
++#if LINUX_VERSION_CODE > KERNEL_VERSION(4,0,0)
++#include <linux/vmalloc.h>
++#endif
++
+ #if !defined(CONFIG_X86) && !defined(CONFIG_X86_64)
+ #error "this module is for x86 or x86_64 architectures only"
+ #endif
+-- 
+2.7.4
+
