@@ -1,20 +1,21 @@
 #global pre rc1
 
 Summary:	Ndiswrapper wraps around Windows WLAN drivers within Linux
-Name: 		ndiswrapper
-Version: 	1.60
-Release: 	1%{?pre}%{?dist}
-License: 	GPLv2
-Group: 		System Environment/Kernel
+Name:		ndiswrapper
+Version:	1.60
+Release:	2%{?pre}%{?dist}
+License:	GPLv2
+Group:		System Environment/Kernel
 URL:		http://ndiswrapper.sourceforge.net
-Source0: 	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?pre}.tar.gz
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Patch0:         Fixed-compilation-issue-with-utils.patch
+Source0:	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?pre}.tar.gz
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Patch0:		Fixed-compilation-issue-with-utils.patch
+BuildRequires:	perl-generators
 
 Provides:	%{name}-kmod-common = %{version}
 Requires:	%{name}-kmod >= %{version}
 
-ExclusiveArch:  %{ix86} x86_64
+ExclusiveArch:	%{ix86} x86_64
 
 %description
 The ndiswrapper project makes it possible to use WLAN-Hardware 
@@ -25,7 +26,7 @@ for your card.
 
 WARNING: Fedora-Kernels use 4K size stack. Many Windows drivers
 will need at least 8K size stacks. For details read the wiki on:
-http:/ndiswrapper.sourceforge.net
+http://ndiswrapper.sourceforge.net
 
 
 %prep
@@ -58,6 +59,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 26 2016 Paul Howarth <paul@city-fan.org> - 1.60-2
+- BR: perl-generators for proper dependency generation
+  (https://fedoraproject.org/wiki/Changes/Build_Root_Without_Perl)
+- Fix rpmlint warning about mixed use of spaces and tabs
+
 * Sun Jun 19 2016 Leigh Scott <leigh123linux@googlemail.com> - 1.60-1
 - Update to 1.60
 
