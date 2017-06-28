@@ -8,7 +8,6 @@ License:	GPLv2
 Group:		System Environment/Kernel
 URL:		http://ndiswrapper.sourceforge.net
 Source0:	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?pre}.tar.gz
-Patch0:		Fixed-compilation-issue-with-utils.patch
 BuildRequires:	perl-generators
 
 Provides:	%{name}-kmod-common = %{version}
@@ -30,7 +29,6 @@ http://ndiswrapper.sourceforge.net
 
 %prep
 %setup -q -n %{name}-%{version}%{?pre}
-%patch0 -p2
 
 
 %build
