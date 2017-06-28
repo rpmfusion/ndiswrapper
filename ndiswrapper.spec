@@ -2,13 +2,12 @@
 
 Summary:	Ndiswrapper wraps around Windows WLAN drivers within Linux
 Name:		ndiswrapper
-Version:	1.60
-Release:	3%{?pre}%{?dist}
+Version:	1.61
+Release:	1%{?pre}%{?dist}
 License:	GPLv2
 Group:		System Environment/Kernel
 URL:		http://ndiswrapper.sourceforge.net
 Source0:	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?pre}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Patch0:		Fixed-compilation-issue-with-utils.patch
 BuildRequires:	perl-generators
 
@@ -35,23 +34,16 @@ http://ndiswrapper.sourceforge.net
 
 
 %build
-make %{?_smp_mflags} -C utils CFLAGS="${RPM_OPT_FLAGS} -I`pwd`/driver"
+%make_build -C utils CFLAGS="%{optflags} -I`pwd`/driver"
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make -C utils DESTDIR=$RPM_BUILD_ROOT install
-mkdir -m755 -p $RPM_BUILD_ROOT/%{_sysconfdir}/ndiswrapper
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+%make_install -C utils
+mkdir -m755 -p %{buildroot}%{_sysconfdir}/ndiswrapper
 
 
 %files
-%defattr(0644,root,root,0755)
 %doc README AUTHORS ChangeLog INSTALL
-%defattr(0755,root,root)
 %dir %{_sysconfdir}/ndiswrapper
 %{_sbindir}/ndiswrapper
 /sbin/loadndisdriver
@@ -59,6 +51,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 28 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.61-1
+- Update to 1.61
+
 * Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.60-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
