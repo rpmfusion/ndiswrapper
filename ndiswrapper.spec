@@ -1,19 +1,19 @@
 #global pre rc1
 
 Summary:	Ndiswrapper wraps around Windows WLAN drivers within Linux
-Name: 		ndiswrapper
-Version: 	1.59
-Release: 	1%{?pre}%{?dist}
-License: 	GPLv2
-Group: 		System Environment/Kernel
+Name:		ndiswrapper
+Version:	1.61
+Release:	1%{?pre}%{?dist}
+License:	GPLv2
+Group:		System Environment/Kernel
 URL:		http://ndiswrapper.sourceforge.net
-Source0: 	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?pre}.tar.gz
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Source0:	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?pre}.tar.gz
+BuildRequires:	perl-generators
 
 Provides:	%{name}-kmod-common = %{version}
 Requires:	%{name}-kmod >= %{version}
 
-ExclusiveArch:  %{ix86} x86_64
+ExclusiveArch:	%{ix86} x86_64
 
 %description
 The ndiswrapper project makes it possible to use WLAN-Hardware 
@@ -24,7 +24,7 @@ for your card.
 
 WARNING: Fedora-Kernels use 4K size stack. Many Windows drivers
 will need at least 8K size stacks. For details read the wiki on:
-http:/ndiswrapper.sourceforge.net
+http://ndiswrapper.sourceforge.net
 
 
 %prep
@@ -32,23 +32,16 @@ http:/ndiswrapper.sourceforge.net
 
 
 %build
-make %{?_smp_mflags} -C utils CFLAGS="${RPM_OPT_FLAGS} -I`pwd`/driver"
+%make_build -C utils CFLAGS="%{optflags} -I`pwd`/driver"
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make -C utils DESTDIR=$RPM_BUILD_ROOT install
-mkdir -m755 -p $RPM_BUILD_ROOT/%{_sysconfdir}/ndiswrapper
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+%make_install -C utils
+mkdir -m755 -p %{buildroot}%{_sysconfdir}/ndiswrapper
 
 
 %files
-%defattr(0644,root,root,0755)
 %doc README AUTHORS ChangeLog INSTALL
-%defattr(0755,root,root)
 %dir %{_sysconfdir}/ndiswrapper
 %{_sbindir}/ndiswrapper
 /sbin/loadndisdriver
@@ -56,6 +49,20 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Jun 28 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.61-1
+- Update to 1.61
+
+* Mon Mar 20 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.60-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
+* Wed Oct 26 2016 Paul Howarth <paul@city-fan.org> - 1.60-2
+- BR: perl-generators for proper dependency generation
+  (https://fedoraproject.org/wiki/Changes/Build_Root_Without_Perl)
+- Fix rpmlint warning about mixed use of spaces and tabs
+
+* Sun Jun 19 2016 Leigh Scott <leigh123linux@googlemail.com> - 1.60-1
+- Update to 1.60
+
 * Sun Dec 01 2013 Nicolas Chauvet <kwizart@gmail.com> - 1.59-1
 - Update to 1.59
 
