@@ -9,6 +9,7 @@ Group:		System Environment/Kernel
 URL:		http://ndiswrapper.sourceforge.net
 Source0:	http://downloads.sf.net/ndiswrapper/ndiswrapper-%{version}%{?pre}.tar.gz
 BuildRequires:	perl-generators
+BuildRequires:	gcc
 
 Provides:	%{name}-kmod-common = %{version}
 Requires:	%{name}-kmod >= %{version}
