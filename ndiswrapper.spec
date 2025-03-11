@@ -36,7 +36,7 @@ http://ndiswrapper.sourceforge.net
 
 
 %install
-%make_install -C utils
+%make_install -C utils sbindir=%{_sbindir} usrsbindir=%{_sbindir}
 mkdir -m755 -p %{buildroot}%{_sysconfdir}/ndiswrapper
 
 
@@ -44,7 +44,7 @@ mkdir -m755 -p %{buildroot}%{_sysconfdir}/ndiswrapper
 %doc README AUTHORS ChangeLog INSTALL
 %dir %{_sysconfdir}/ndiswrapper
 %{_sbindir}/ndiswrapper
-/sbin/loadndisdriver
+%{_sbindir}/loadndisdriver
 %{_sbindir}/ndiswrapper-buginfo
 
 
